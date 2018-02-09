@@ -1,0 +1,69 @@
+﻿@charset "utf-8"; 
+*{ margin: 0; padding: 0;box-sizing: border-box;}
+html, body{ width: 100%; height: auto; margin: 0; padding: 0; font-size: 14px; background: #FFFFFF; color: #3e3e3e; overflow-x: hidden;position: relative;}
+body, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img{ border: medium none; margin: 0; padding: 0; outline: none;}
+body, button, input, select, textarea{ font: 14px LatoLight, '微软雅黑', "Microsoft YaHei", tahoma, Srial, helvetica, sans-serif; outline: none;}
+h1, h2, h3, h4, h5, h6{ margin: 0;}
+ul, ol, li{ list-style: none;}
+a{ text-decoration: none;}
+a:hover{ text-decoration: none;}
+p{ margin: 0;}
+img{ border: 0px;}
+table{ border-spacing: 0px;}
+tr{ cursor: pointer;}
+input{ border: 0;}
+i,em,b{font-style: normal;}
+textarea{ resize: none; padding: 0;}
+::selection{ background: #e4d393; color: #fff;}
+::-moz-selection{ background: #e4d393;}
+html{font-size: 62.5%;}
+body{font-size: 1.4rem;}
+/*禁止选中文字*/
+.unSelet{ 
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    -khtml-user-select:none;
+    user-select:none;
+}
+
+/*vue*/
+[v-cloak] {
+  display: none;
+}
+/*清除浮动*/
+.clearBoth:after{display: block;content: "";clear: both;}
+/*上下边距溢出*/
+.downL:after{display: table;content: "";}
+.downL:before{display: table;content: "";}
+@media screen and (max-width:320px){ 
+	body{font-size: 1.2rem;}
+}
+/*//自定义滚动条*/
+.scrollbar{overflow: auto;}
+.scrollbar::-webkit-scrollbar{ width: 5px; }
+.scrollbar::-webkit-scrollbar-track{ background: #ddd;}
+.scrollbar::-webkit-scrollbar-thumb{ background: #4890eb; border-radius: 5px;}
+/*修改element ui 的table超出滚动条*/
+.el-table__body-wrapper{overflow: auto;}
+.el-table__body-wrapper::-webkit-scrollbar{ width: 5px; }
+.el-table__body-wrapper::-webkit-scrollbar-track{ background: #ddd;}
+.el-table__body-wrapper::-webkit-scrollbar-thumb{ background: #4890eb; border-radius: 5px;}
+/*.scrollbar::-webkit-scrollbar-button{ background-color: #4890eb;}*/
+/*.scrollbar::-webkit-scrollbar-track-piece{ background: url(http://www.lyblog.net/wp/wp-content/themes/mine/img/stripes_tiny_08.png);}*/
+/*.scrollbar::-webkit-scrollbar-corner{ background: #82AFFF;}
+.scrollbar::-webkit-scrollbar-resizer{ background: #FF0BEE;}*/
+
+/*iconfont的样式*/
+.iconfont{ font-family: "iconfont" !important; font-size: 16px; speak: none; font-style: normal; font-weight: 400; font-variant: normal; text-transform: none; line-height: 1; vertical-align: baseline; display: inline-block; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+
+/*背景渐变*/
+.bg-jb{background: #999;}
+.bg-jb1{background: -webkit-linear-gradient(0, #f38ca8, #f48884); background: linear-gradient(90deg, #f38ca8, #f48884);}
+.bg-jb2{background: -webkit-linear-gradient(0, #c5a7fe, #959dfc); background: linear-gradient(90deg, #c5a7fe, #959dfc);}
+.bg-jb3{background: -webkit-linear-gradient(0, #82c1ea, #3ec5b8); background: linear-gradient(90deg, #82c1ea, #3ec5b8);}
+
+/*下阴影*/
+.bottom-shadow{box-shadow: 0 1px 10px -4px #444;-webkit-box-shadow: 0 1px 10px -4px #444;}
+/*上阴影*/
+.top-shadow{box-shadow: 0 -1px 10px -4px #444;-webkit-box-shadow: 0 -1px 10px -4px #444;}
