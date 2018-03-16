@@ -31,7 +31,7 @@
 			<el-form-item label="开锁资质：" prop="pic_can_unlocking">
 				<el-upload
 				  class="pic-uploader"
-				  action="https://jsonplaceholder.typicode.com/posts/"
+				  action="http://wx.funlifeday.com/web/wechat/server/uploadImg"
 				  :show-file-list="false"
 				  :on-success="handlePicSuccess3"
 				  :on-error="picUpErr"
@@ -183,7 +183,7 @@
 		 		},
 		 		//图片上传前
 		 		beforePicUpload(file){
-			        const isJPG = file.type === 'image/jpeg';
+					const isJPG = (file.type === 'image/jpeg'|| file.type === 'image/png');
 			        const isLt2M = file.size / 1024 / 1024 < 2;
 			        if (!isJPG) {
 			          this.$message.error('上传的图片只能是 JPG 格式!');
