@@ -49,7 +49,7 @@
 		</div>
 		<div style="text-align: center;margin: 20px auto;">
 			<el-button type="success" @click="viewC(0)" style="margin-right: 10px">添加保单</el-button>
-		    <el-button type="primary" @click="" style="">确认投保</el-button>
+		    <el-button type="primary" style="">确认投保</el-button>
 		</div>
 	</div>
 </template>

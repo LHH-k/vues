@@ -32,6 +32,7 @@
 				<el-upload
 				  class="pic-uploader"
 				  action="http://wx.funlifeday.com/web/wechat/server/uploadImg"
+				  name = "photo"
 				  :show-file-list="false"
 				  :on-success="handlePicSuccess3"
 				  :on-error="picUpErr"
