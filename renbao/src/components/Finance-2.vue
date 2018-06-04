@@ -44,7 +44,7 @@
 			    		{{scope.row.balance | getMoney}}
 			    	</template>
 			    </el-table-column>
-			    <el-table-column label="操作" width="" type="index" width="160px">
+			    <el-table-column label="操作" type="index" width="160px">
 			    	<template slot-scope="scope">
 			    		 <el-button size="small" type="primary" @click="PopupSelect(scope.row,scope.$index)">查看充值记录</el-button>
 			    	</template>

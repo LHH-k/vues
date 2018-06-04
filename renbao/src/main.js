@@ -25,6 +25,7 @@ import {GETUSERINFO} from './constants';
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',
+  
   router,
   render: h => h(App),
   template: '<App/>',
