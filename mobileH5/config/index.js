@@ -11,14 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
-    		target:'http://wx.funlifeday.com/web/wechat',
-    		changeOrgin:true,
-    		secure: false,
-    		pathRewrite:{
-    			'^/api':'/'
-    		}
-    	}
+      '/apis': {    
+          target: 'http://api.funlifeday.com',  // 接口域名
+          changeOrigin: true,  //是否跨域
+          secure: false,  // 如果是https接口，需要配置这个参数
+          pathRewrite: {
+              '^/apis': ''   //需要rewrite的,
+          }              
+      }
     },
 
     // Various Dev Server settings
@@ -66,7 +66,7 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false,
+    productionGzip: true, //开启Gzip压缩
     productionGzipExtensions: ['js', 'css'],
 
     // Run the build command with an extra argument to

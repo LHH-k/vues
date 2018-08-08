@@ -10,15 +10,20 @@
 </template>
 
 <script>
+import BASE_URL from '../../constants';
 export default {
   name: "myupload",
-  props: ['picUp', 'ind', 'txt'],
+  props: ['ind', 'txt'],
   data() {
     return {
       globalToast: null,
       myFile:null,
       img: '',
-      picInfo: this.picUp,
+      picInfo: {
+        //图片上传的属性
+        url: `${BASE_URL}/fnw/post/uploadBlob`,
+        name: "photo"
+      },
       Orientation:null,
     };
   },
@@ -130,9 +135,9 @@ export default {
             headers: { 'Content-Types': 'multipart/form-data' }
         };
         //上传图片给后台
-        axios.post(this.picInfo.url, data, config).then(function (res) {
+        this.$http.post(this.picInfo.url, data, config).then(function (res) {
             _this.globalToast.clear();
-            _this.img = window.location.origin + res.data.data.store_result;
+            _this.img = BASE_URL + res.data.data.store_result;
             //子组件间数据返回父组件
             _this.$emit("childget", _this.ind, res.data.data.store_result);
         }).catch(function (err) {});

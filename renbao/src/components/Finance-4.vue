@@ -54,7 +54,7 @@
 			    <el-table-column property="blank_num" label="银行账户"></el-table-column>
 			    <el-table-column property="Operator" label="申请人" width="120"></el-table-column>
 			    <el-table-column property="order_state" label="当前状态" width="120"></el-table-column>
-			    <el-table-column label="操作" width="" type="index" width="120">
+			    <el-table-column label="操作" type="index" width="120">
 			    	<template slot-scope="scope">
 			    		 <el-button type="primary" v-if="scope.row.order_state == '未支付'" size="small" @click="dialog1 = true">完成支付</el-button>
 			    	</template>
