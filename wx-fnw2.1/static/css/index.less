@@ -1,0 +1,133 @@
+@charset "utf-8"; 
+*{ margin: 0; padding: 0;box-sizing: border-box;}
+html, body{ width: 100%; height: auto; margin: 0; padding: 0; font-size: 14px; background: #FFFFFF; color: #3e3e3e; overflow-x: hidden;position: relative;}
+body, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img{ border: medium none; margin: 0; padding: 0; outline: none;}
+body, button, input, select, textarea{ font: 14px LatoLight, '微软雅黑', "Microsoft YaHei", tahoma, Srial, helvetica, sans-serif; outline: none;}
+h1, h2, h3, h4, h5, h6{ margin: 0;}
+ul, ol, li{ list-style: none;}
+a{ text-decoration: none;}
+a:hover{ text-decoration: none;}
+p{ margin: 0;}
+img{ border: 0px;display: block;}
+table{ border-spacing: 0px; border-collapse: collapse;}
+tr{ cursor: pointer;}
+input{ border: 0;}
+i,em,b{font-style: normal;}
+textarea{ resize: none; padding: 0;}
+::selection{ background: #e4d393; color: #fff;}
+::-moz-selection{ background: #e4d393;}
+html{font-size: 625%;}
+body{font-size: .14rem;}
+/*清除浮动*/
+.clearBoth:after{display: block;content: "";clear: both;}
+/*上下边距溢出*/
+.downL:after{display: table;content: "";}
+.downL:before{display: table;content: "";}
+@media screen and (max-width: 319px){ html{ font-size: 85.33333px;body{font-size: .12rem;}}
+    }
+@media screen and (min-width: 320px) and (max-width: 359px){ html{ font-size: 85.33333px;}
+    }
+@media screen and (min-width: 360px) and (max-width: 374px){ html{ font-size: 96px;}
+    }
+@media screen and (min-width: 375px) and (max-width: 383px){ html{ font-size: 100px;}
+    }
+@media screen and (min-width: 384px) and (max-width: 399px){ html{ font-size: 102.4px;}
+    }
+@media screen and (min-width: 400px) and (max-width: 413px){ html{ font-size: 106.66667px;}
+    }
+@media screen and (min-width: 414px){ html{ font-size: 110.4px;}
+    }
+//通用
+[v-cloak]{ display: none;}
+.transition(@property:all,@duration:.5s,@timing-function:linear,@delay:0s){
+    transition: @property @duration @timing-function @delay;
+    -webkit-transition: @property @duration @timing-function @delay;
+    -moz-transition: @property @duration @timing-function @delay;
+    -o-transition: @property @duration @timing-function @delay;
+}
+.transition-delay(@time){
+    transition-delay:@time;
+    -webkit-transition-delay:@time;
+    -moz-transition-delay:@time;
+    -o-transition-delay:@time;    
+}
+.scrollbar{
+    overflow-y: scroll;height:100%;
+}
+.scrollbar::-webkit-scrollbar{  
+    width: .04rem;
+    background-color: transparent;  
+}  
+.scrollbar::-webkit-scrollbar-thumb{
+    border-radius: .04rem;
+    background-color: #25AB38;
+}  
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: .04rem;
+    background-color: transparent;
+}
+
+/*按钮渐变*/
+.btn-jb{ font-size: 14px; position: relative; width: 65px; display: inline-block; text-align: center; line-height: 22px; height: 22px; border-radius: 22px; z-index: 0;}
+.btn-jb span{z-index: 3;position: absolute;left: 0;top: 0;width: 100%;height: 100%;-webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.btn-jb:before{ border-radius: 22px; content: ""; position: absolute; z-index: -1; background: #fff; left: 0;top: 0; width: 100%; height: 100%;}
+.btn-jb:after{ content: ""; position: absolute; z-index: -2; width: 67px; height: 24px; top: -1px; bottom: -1px; left: -1px; right: -1px;  border-radius: 24px;}
+.btn-jb1 span{color: #f38ca8;background-image: -webkit-linear-gradient(0, #f38ca8, #f48884); background-image: linear-gradient(90deg, #f38ca8, #f48884); }
+.btn-jb1:after{background: -webkit-linear-gradient(0, #f38ca8, #f48884); background: linear-gradient(90deg, #f38ca8, #f48884);}
+.btn-jb2 span{color: #c5a7fe;background-image: -webkit-linear-gradient(0, #c5a7fe, #959dfc); background-image: linear-gradient(90deg, #c5a7fe, #959dfc); }
+.btn-jb2:after{background: -webkit-linear-gradient(0, #c5a7fe, #959dfc); background: linear-gradient(90deg, #c5a7fe, #959dfc);}
+.btn-jb3 span{color: #82c1ea;background-image: -webkit-linear-gradient(0, #82c1ea, #3ec5b8); background-image: linear-gradient(90deg, #82c1ea, #3ec5b8); }
+.btn-jb3:after{background: -webkit-linear-gradient(0, #82c1ea, #3ec5b8); background: linear-gradient(90deg, #82c1ea, #3ec5b8);}
+@media only screen and (max-width: 320px) {
+    .btn-jb{ font-size: 12px; width: 58px;line-height: 18px; height: 18px; border-radius: 18px;}
+    .btn-jb:before{ border-radius: 18px;}
+    .btn-jb:after{width: 60px; height: 20px;border-radius: 20px;}    
+}
+/*背景渐变*/
+.bg-jb{background: #999;}
+.bg-jb1{background: -webkit-linear-gradient(0, #f38ca8, #f48884); background: linear-gradient(90deg, #f38ca8, #f48884);}
+.bg-jb2{background: -webkit-linear-gradient(0, #c5a7fe, #959dfc); background: linear-gradient(90deg, #c5a7fe, #959dfc);}
+.bg-jb3{background: -webkit-linear-gradient(0, #82c1ea, #3ec5b8); background: linear-gradient(90deg, #82c1ea, #3ec5b8);}
+
+//下阴影
+.bottom-shadow{box-shadow: 0 1px 10px -4px #333;-webkit-box-shadow: 0 1px 10px -4px #333;}
+
+//flex
+.my-flex{display: flex; display: -webkit-flex;}
+.my-flex-item{flex: auto; -webkit-flex: auto;}
+
+//loading
+#loading{width: 100vw;height: 100vh;position: fixed;background: #fff;z-index: 100000;}
+#loading img{display: block;position: absolute;}
+#loading > div{position: absolute;left: 50%;top: 50%;width: 200px;height:80px;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);}
+#loading .l{left: 50%;top: 50%;width: 100%;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);}
+#loading .s1{left:-10px;top:-10px;animation: rotate1 1s ease-in-out 0s infinite;-webkit-animation: rotate1 1s ease-in-out 0s infinite;}
+#loading .s2{right:-15px;top:-50px;animation: rotate2 1.5s ease-in-out 0s infinite;-webkit-animation: rotate2 1.5s ease-in-out 0s infinite;}
+#loading .s3{left:10px;bottom:-20px;animation: rotate1 1s ease-in-out 0s infinite;-webkit-animation: rotate1 1s ease-in-out 0s infinite;}
+#loading .s4{right:0px;bottom:0px;animation: rotate3 2s linear 0s infinite;-webkit-animation: rotate3 2s linear 0s infinite;}
+@keyframes rotate1{
+    0% {transform: rotate(0);}
+    100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes rotate1{
+    0% {transform: rotate(0);}
+    100% {transform: rotate(360deg);}
+}
+@keyframes rotate2{
+    0% {transform: rotate(0);}
+    100% {transform: rotate(-360deg);}
+}
+@-webkit-keyframes rotate2{
+    0% {transform: rotate(0);}
+    100% {transform: rotate(-360deg);}
+}
+@keyframes rotate3{
+    0% {transform: rotate(0) scale(1);}
+    50% {transform: rotate(-180deg) scale(1.5);}
+    100% {transform: rotate(-360deg) scale(1);}
+}
+@-webkit-keyframes rotate3{
+    0% {transform: rotate(0) scale(1);}
+    50% {transform: rotate(-180deg) scale(1.5);}
+    100% {transform: rotate(-360deg) scale(1);}
+}
