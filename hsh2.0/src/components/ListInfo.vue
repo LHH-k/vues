@@ -33,24 +33,10 @@
       <img :src="p_info.info_img">
       <img src="../assets/images/list-cn.jpg">
     </div>
-    <div class="buy-btn" v-if='p_id == 43'>
-      <div class="back" @click="pShow = true">非会员2元/㎡</div>
-      <div class="buy" @click="isHasP(p_id)">成为会员享1元/㎡</div>
-    </div>
-    <div class="buy-btn" v-else>
+    <div class="buy-btn">
       <div class="back" @click="$router.push({ name: 'home'})">返回首页</div>
       <div class="buy" @click="isHasP(p_id)">立即购买</div>
     </div>
-    <van-popup v-model="pShow" class='my-popup style1' prevent-scroll>
-      <div class="t">非会员家政保洁</div>
-      <div class="c">
-        <p>您还不是家政保洁会员，服务费为2元/㎡</p>
-      </div>
-      <div class="b">
-        <a class='my-btn back' @click="callPhone()">继续预约服务</a>
-        <a class='my-btn go' @click="isHasP(p_id)">成为会员享1元/㎡</a>
-      </div>
-    </van-popup>
   </div>
 </template>
 
@@ -62,26 +48,20 @@
       return {
         p_id:null,  //product_id
         p_info:{},  //产品详情
-        hasAdd:false, //是否有历史地址
-        pShow:false, //弹窗
       }
     },
     components:{
 
     },
     created(){
-      
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.p_id = parseInt(this.$route.params.type);
-      //判断是否有地址的历史记录
-      this.$http.get(`${BASE_URL}/fnw/get/CheckUserAddress/${localStorage.getItem('phone')}`).then((res)=>{
-        this.hasAdd = res.data.res;
-      })
+
       //产品的product_id
         // 39 开锁 // 40 疏通
         // 2 360家庭维修 // 3 热水器维修
         // 30 360家电清洗 // 32 油烟机清洗 // 36 空调清洗 // 35 冰箱清洗
         // 33 挂机加氟 // 34 柜机加氟
-        // 43 会员
       switch(this.p_id){
         case 40 :
           this.p_info = {
@@ -203,87 +183,9 @@
             style:{height:'90%'},
           };
           break;
-        case 43:
-          this.p_info = {
-            product_name:'家政保洁',
-            product_price:'会员价：1元/㎡',
-            product_nr:'住宅日常保洁',
-            isZs:false,
-            info_img:require('../assets/images/list-bj.jpg'),
-            list_img:require('../assets/images/p_pic_6.png'),
-            p_labels:['会员尊享','50m²起'],
-            style:{},
-          };
-          break;
       }
-
-       //分享设置
-      var configDates = {
-        url: location.href,
-        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'],
-      };
-      var _this = this;
-      this.$http.get('http://wx.funlifeday.com/web/wechat/user/get/config', {params:configDates}).then(function (res) {
-        if (res.data) {
-          wx.config(res.data);
-          wx.ready(function(){
-            var data   = {};
-            data.title = '你有一份'+_this.p_info.product_name+'服务待领取';
-            data.desc  = '一个人也能做好维修难事';
-            data.link  = 'http://wx.funlifeday.com/web/wechat/user/enter/htmlClientDetail/'+_this.p_id;
-            data.img   = 'http://wx.funlifeday.com/storage/qrcodes/ss.jpg';
-            wx.onMenuShareTimeline({
-                title:   data.title, // 分享标题
-                desc:    data.desc, // 分享描述
-                link:    data.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl:  data.img, // 分享图标
-                success: function (){
-                    // 用户点击了分享后执行的回调函数
-                },
-            });
-            wx.onMenuShareAppMessage({
-                title:   data.title, // 分享标题
-                desc:    data.desc, // 分享描述
-                link:    data.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl:  data.img, // 分享图标
-                type:    '', // 分享类型,music、video或link，不填默认为link
-                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                success: function (){
-                    // 用户点击了分享后执行的回调函数
-                }
-            });
-          });
-        } else {
-          _this.$toast.fail("获取用户信息失败！");
-        }
-      })
     },
     methods:{
-      //判断是否会员
-      // isMember(p_id){
-      //   // 会员产品Id
-      //   let hyid = 100;
-      //   if(true){
-      //     this.$dialog.confirm({
-      //       title: '温馨提示',
-      //       message: '您还不是会员，不能享受会员价格？',
-      //       confirmButtonText:'成为会员',
-      //       cancelButtonText:'购买其它产品',
-      //       closeOnClickOverlay:true,
-      //     }).then(() => {
-      //       if(this.hasAdd){
-      //         this.$router.push({ name: 'addSelect', params:{type:hyid}});
-      //       }else{
-      //         this.$router.push({ name: 'buy_before', params:{type:hyid}});
-      //       }
-      //     }).catch(()=>{
-
-      //     });
-      //   }else{
-      //     window.location.href = "tel:4008084989";
-      //   }
-      // },
-      //购买流程
       isHasP(product_id){
         let globalToast = this.$toast.loading({
           duration: 0, // 持续展示 toast
@@ -291,45 +193,47 @@
           forbidClick: true, // 禁用背景点击
           message: '加载中...'
         });
-        //是否有正在使用的服务
-        this.$http.get(`${BASE_URL}/fnw/get/processingService/${localStorage.getItem('phone')}`).then((res)=>{
-          if(res.data.res){
-            this.$toast.fail('您有未完成的服务，请等待核销后再购买~');
-          }else{
-            // 是否有已购买过对应的服务
-            this.$http.get(`${BASE_URL}/fnw/get/User360Order/${localStorage.getItem('phone')}?product_id=${product_id}`).then((res)=>{
-              globalToast.clear();
-              if(res.data.res){
-                //获取已有服务列表
-                this.$dialog.confirm({
-                  title: '温馨提示',
-                  message: '您已经购买过此类服务，是否需要购买新的服务？',
-                  confirmButtonText:'去购买',
-                  cancelButtonText:'去使用',
-                  closeOnClickOverlay:true,
-                }).then(() => {
-                  if(this.hasAdd){
+        let hasAdd;
+        //判断是否有地址的历史记录
+        this.$http.get(`${BASE_URL}/fnw/get/CheckUserAddress/${localStorage.getItem('phone')}`).then((res)=>{
+          hasAdd = res.data.res;
+          //是否有正在使用的服务
+          this.$http.get(`${BASE_URL}/fnw/get/processingService/${localStorage.getItem('phone')}`).then((res)=>{
+            if(res.data.res){
+              this.$toast.fail('您有未完成的服务，请等待核销后再购买~');
+            }else{
+              // 是否有已购买过对应的服务
+              this.$http.get(`${BASE_URL}/fnw/get/User360Order/${localStorage.getItem('phone')}?product_id=${product_id}`).then((res)=>{
+                globalToast.clear();
+                if(res.data.res){
+                  //获取已有服务列表
+                  this.$dialog.confirm({
+                    title: '温馨提示',
+                    message: '您已经购买过此类服务，是否需要购买新的服务？',
+                    confirmButtonText:'去购买',
+                    cancelButtonText:'去使用',
+                    closeOnClickOverlay:true,
+                  }).then(() => {
+                    if(hasAdd){
+                      this.$router.push({ name: 'addSelect', params:{type:product_id}});
+                    }else{
+                      this.$router.push({ name: 'buy_before', params:{type:product_id}});
+                    }
+                  }).catch(()=>{
+                    this.$router.push({ name: 'myBuy'});
+                  });
+                }else{
+                  if(hasAdd){
                     this.$router.push({ name: 'addSelect', params:{type:product_id}});
                   }else{
                     this.$router.push({ name: 'buy_before', params:{type:product_id}});
                   }
-                }).catch(()=>{
-                  this.$router.push({ name: 'myBuy'});
-                });
-              }else{
-                if(this.hasAdd){
-                  this.$router.push({ name: 'addSelect', params:{type:product_id}});
-                }else{
-                  this.$router.push({ name: 'buy_before', params:{type:product_id}});
-                }
-              }   
-            })
-          }
+                }   
+              })
+            }
+          })
         })
         
-      },
-      callPhone(){
-        window.location.href = "tel:4008084989";
       }
     }
    
@@ -339,11 +243,11 @@
 <style scoped>
   .listInfo{min-height: 100vh;}
   .infos{background: #fff;margin-bottom: 10px;padding:0 .1rem;}
-  .infos li{border-bottom: 1px solid #ddd;overflow: hidden;line-height: .4rem;height: .4rem; color:#333;}
+  .infos li{border-bottom: 1px solid #ddd;overflow: hidden;line-height: .4rem;height: .4rem; color:#333;font-size: .14rem;}
   .infos li:last-child{border: none;}
-  .infos li > div:first-child{float: left;font-weight: bold;font-size: .14rem;}
-  .infos li > div:last-child{float: right;font-size: .12rem;}
-  .infos li:first-child > div:last-child{color: #e60000;font-size: .14rem;}
+  .infos li > div:first-child{float: left;font-weight: bold;}
+  .infos li > div:last-child{float: right;}
+  .infos li:first-child > div:last-child{color: #e60000;}
   .infos li:last-child > div:first-child span{font-weight: normal;color:#e60000;position: relative;border: 1px solid #e60000;display: block;height: .2rem;line-height:.18rem;padding:0 .1rem;border-radius: 5px;overflow: hidden;top: .1rem;}
 
   .info-imgs{padding-bottom: .6rem;background: #fff;}
@@ -377,12 +281,4 @@
   .L-info.w4>.L-info-box>.L-info-box-r{margin-left: .72rem;}
   .L-info.w6>.L-info-box>.L-info-box-r{margin-left: 1rem;}
   
-  /* 自定义弹窗 */
-  .my-popup.style1{min-height: auto;}
-  .my-popup.style1 .t{font-size: .16rem;font-weight: bold;line-height: 3;border:none;}
-  .my-popup.style1 .c{padding: .1rem .25rem;color:#999;}
-  .my-popup.style1 .b{position: relative;padding-top: 0;}
-  .my-popup.style1 .b .my-btn{width: 80%;font-size: .18rem;margin: 5px 0;line-height: 2;border-radius: 2em;}
-  .my-popup.style1 .b .my-btn:first-child{background: #5f9dea;color: #fff;}
-  .my-popup.style1 .b .my-btn:last-child{background: #eb8032;border-color: #eb8032;}
 </style>

@@ -3,8 +3,8 @@
     <div v-if="type == 'pay'">
       <div class="boxs box1">
         <van-icon name="checked"></van-icon>
-        <p>购买成功</p>
-        <div class="info">可在首页已购买的服务中呼叫服务！</div>
+        <p>支付成功</p>
+        <div class="info">您可在“可呼叫服务”中预约/呼叫服务！</div>
       </div>
       <div class="p-10" style="margin: 20px 0;text-align:center;">					
         <van-button class='btn-primary' size="large" @click="$router.replace('/myBuy')">确定</van-button>

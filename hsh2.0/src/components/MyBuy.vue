@@ -3,7 +3,7 @@
     <div v-show="isShow">
       <div class="myS" v-if='myService.length > 0'>
         <ul>
-          <li v-for="(item,index) in myService" :key="index" class="my-order-list"  :class="{'hy':item.product_id==43}" >
+          <li v-for="(item,index) in myService" :key="index" class="my-order-list">
             <div class="list-tit t1">
               <span>{{item.product_name}}</span>
             </div>
@@ -126,7 +126,4 @@
   .noB img{display: inline-block; width: .8rem;}
   .noB p{line-height: .24rem;color:#686868;}
   .noB a{color:#5f9dea;}
-  .hy .btn-primary{background: rgb(211,168,9);}
-  .hy.my-order-list .list-tit.t1 span:first-of-type{color: rgb(211,168,9);}
-  
 </style>

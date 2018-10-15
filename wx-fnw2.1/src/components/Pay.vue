@@ -53,11 +53,7 @@
           this.pay_money = this.unpay.price;
         }else{
           //订单如果已支付了
-          // if(this.product_id !== 39 && this.product_id !==40){
-            this.$router.replace({ name: 'success', params: { type:'pay'}});
-          // }else{
-          //   this.$router.replace({ name: 'success', params: { type:'call'}});
-          // }
+          this.$router.replace({ name: 'success', params: { type:'pay'}});
         }
         this.globalToast.clear();
       })

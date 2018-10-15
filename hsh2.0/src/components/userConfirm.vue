@@ -49,9 +49,9 @@
 					<van-cell title="微信">
 						<van-radio name="0"></van-radio>
 					</van-cell>
-					<van-cell title="现金">
+					<!-- <van-cell title="现金">
 						<van-radio name="1"></van-radio>
-					</van-cell>
+					</van-cell> -->
 				</van-cell-group>
 			</van-radio-group>
 			<div class="p-10" style="margin: 30px 0 20px;text-align:center;">					
@@ -96,29 +96,37 @@ export default {
       forbidClick: true, // 禁用背景点击
       message: '加载中...'
     });
-
 		//获取订单信息
 		this.card_id = this.$route.query.card_id;
 		this.$http.get(`${BASE_URL}/fnw/get/processingService/${localStorage.getItem('phone')}?card_id=${this.card_id}`).then((res)=>{
-			this.globalToast.clear();
 			if(res.data.data.status_code == 10){
 				this.confirm_info = res.data.data;
 				this.worker_info = res.data.data.worker_info;
 				var pay = this.confirm_info.service_total_money - ( this.confirm_info.service_subsidy_money ? this.confirm_info.service_subsidy_money : 0 );
 				this.pay_money = pay >= 0 ? pay : 0;
-			}else{
-				//如果已支付，直接跳转
-				// this.$router.replace({ name: 'rate', query:{card_id:this.card_id}});
-				this.$dialog.alert({
-					title: '温馨提示',
-					message: '该订单已核销完成！',
-				}).then(() => {
-					// this.$router.push({ name: 'home'});
-					wx.closeWindow();
-				})
 			}
-		})
-    
+			this.globalToast.clear();
+		});
+		//支付回调
+		if(this.$route.query.isPay){
+			this.$dialog.confirm({
+				title: '支付确认',
+				message: '请确认微信支付是否已完成？',
+				cancelButtonText:'重新支付',
+				confirmButtonText:'已完成',
+			}).then(() => {
+				//确认是否完成
+				this.$http.get(`${BASE_URL}/fnw/get/CheckUserPayedService/${localStorage.getItem('phone')}?card_id=${this.card_id}`).then((res)=>{
+					if(res.data.res){
+						this.$router.replace({ name: 'rate', query:{card_id:this.card_id}});
+					}else{
+						this.$toast.fail('订单未支付成功，请重新支付！');
+					}
+				})
+			}).catch(()=>{
+
+			})
+		}
   },
   mounted: function mounted() {
     //生命周期
@@ -156,8 +164,6 @@ export default {
 				if(this.confirm_info.name == '测试'){
 					this.pay_money = 0.01;
 				}
-			}else{
-				this.pay_type = 0;
 			}
 			//验证通过，提交数据
 			this.globalToast = this.$toast.loading({
@@ -171,22 +177,26 @@ export default {
 				id: this.card_id,
 				service_pay_money: this.pay_money,
 				scene_img: this.imgs[0],
-				payment: this.pay_type,
+				url: window.location.href
 			};
-			this.$http.get(`//wx.funlifeday.com/web/wechat/user/get/pay`, {params:datas}).then((res)=>{
-					this.globalToast.clear();
-					if (!res.data.data.payment) {
-						//如果价格为0
-						this.$router.replace({ name: 'rate', query:{card_id:res.data.data.id}});
-					} else if (res.data.data.payment == 1) {
-						//如果微信支付
-						var myUrl = encodeURIComponent(`${window.location.origin}/wx/client/#/rate?card_id=${res.data.data.id}`);
-						window.location.href = '//wx.funlifeday.com/web/wechat/user/enter/payForService/' + res.data.data.id + '?url=' + myUrl;
-					} else if (res.data.data.payment == 2) {
-						//如果现金支付
-						// this.$router.replace({name:'success',params:{type:'cash'}});
-						this.$router.replace({ name: 'rate', query:{card_id:res.data.data.id}});
+			this.$http.post(`${BASE_URL}/fnw/post/ServicePay/${localStorage.getItem('phone')}`,datas).then((res)=>{
+				if(res.data.res){
+					if(res.data.data == 1){
+						//如果不需要付钱
+						this.$router.replace({ name: 'rate', query:{card_id:this.card_id}});
+					}else{
+						//需要付钱
+						window.location.href = res.data.data[0] + '&redirect_url=' + encodeURIComponent(location.href+'&isPay=1');;
 					}
+					this.globalToast.clear();
+				}else{
+					this.$dialog.alert({
+							title: '温馨提示',
+							message: '该订单已支付！',
+					}).then(() => {
+						this.$router.replace({ name: 'rate', query:{card_id:this.card_id}});
+					})
+				}
 			})
 		}
   }

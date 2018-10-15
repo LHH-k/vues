@@ -1,6 +1,22 @@
 <template>
   <div class="home">
     <ul class="list">
+       <!-- 保洁会员 -->
+      <li>
+        <div class="top-list">
+          <img src='../assets/images/p_pic_6.png' alt="">
+          <div class="t1"><span></span><span>家政保洁</span></div>
+          <div class="t2">
+            <span>会员尊享</span>
+            <span>50㎡起</span>
+          </div>
+          <div class="p1">原价：<span>2元/㎡</span></div>
+          <div class="p2">会员抢购价：<span>1元/㎡</span></div> 
+          <div class="btn btn-1"  @click='showList(43)'>
+            点击查看
+          </div>
+        </div>
+      </li>
       <!-- 油烟机清洗-->
       <li>
         <div class="top-list">
@@ -12,7 +28,7 @@
           </div>
           <div class="p1">原价：<span>235元</span></div>
           <div class="p2">抢购价：<span>128元</span></div>
-          <div class="btn btn-1" @click='showList(6)'>
+          <div class="btn btn-1" @click='showList(32)'>
             点击查看
           </div>
         </div>
@@ -28,7 +44,7 @@
           </div>
           <div class="p1">原价：<span>158元</span></div>
           <div class="p2">抢购价：<span>99元</span></div>
-          <div class="btn btn-1" @click='showList(7)'>
+          <div class="btn btn-1" @click='showList(36)'>
             点击查看
           </div>
         </div>
@@ -44,7 +60,7 @@
           </div>
           <div class="p1">原价：<span>180元</span></div>
           <div class="p2">抢购价：<span>99元</span></div>
-          <div class="btn btn-1" @click='showList(8)'>
+          <div class="btn btn-1" @click='showList(35)'>
             点击查看
           </div>
         </div>
@@ -52,7 +68,7 @@
       <!-- 360家庭电器清洗-->
       <li>
         <div class="top-list">
-          <img src='../assets/images/p_pic_6.png' alt="">
+          <img src='../assets/images/p_pic_7.png' alt="">
           <div class="t1"><span>（四台次）</span><span>家庭电器清洗</span></div>
           <div class="t2">
             <span>冰箱</span>
@@ -61,7 +77,7 @@
           </div>
           <div class="p1">原价：<span>590元</span></div>
           <div class="p2">抢购价：<span>360元</span></div>
-          <div class="btn btn-1" @click='showList(5)'>
+          <div class="btn btn-1" @click='showList(30)'>
             点击查看
           </div>
         </div>
@@ -77,7 +93,7 @@
           </div>
           <div class="p1">原价：<span>720元</span></div>
           <div class="p2">抢购价：<span>360元</span></div>
-          <div class="btn btn-1" @click='showList(3)'>
+          <div class="btn btn-1" @click='showList(2)'>
             点击查看
           </div>
         </div>
@@ -92,7 +108,7 @@
           </div>
           <div class="p1">原价：<span>280元</span></div>
           <div class="p2">抢购价：<span>158元</span></div>
-          <div class="btn btn-1" @click='showList(9)'>
+          <div class="btn btn-1" @click='showList(33)'>
             点击查看
           </div>
         </div>
@@ -107,7 +123,7 @@
           </div>
           <div class="p1">原价：<span>320元</span></div>
           <div class="p2">抢购价：<span>198元</span></div>
-          <div class="btn btn-1" @click='showList(10)'>
+          <div class="btn btn-1" @click='showList(34)'>
             点击查看
           </div>
         </div>
@@ -124,7 +140,7 @@
           </div>
           <div class="p1">原价：<span>110元</span></div>
           <div class="p2">抢购价：<span>86元</span></div>  
-          <div class="btn btn-1"  @click='showList(1)'>
+          <div class="btn btn-1"  @click='showList(39)'>
             点击查看
           </div>
         </div>
@@ -141,7 +157,7 @@
           </div>
           <div class="p1">原价：<span>110元</span></div>
           <div class="p2">抢购价：<span>86元</span></div> 
-          <div class="btn btn-1"  @click='showList(2)'>
+          <div class="btn btn-1"  @click='showList(40)'>
             点击查看
           </div>
         </div>
@@ -157,11 +173,12 @@
           </div>
           <div class="p1">原价：<span>280元</span></div>
           <div class="p2">抢购价：<span>199元</span></div> 
-          <div class="btn btn-1"  @click='showList(4)'>
+          <div class="btn btn-1"  @click='showList(3)'>
             点击查看
           </div>
         </div>
       </li>
+
     </ul>
     <c-footer :is-cur = '1'></c-footer>
   </div>
@@ -187,17 +204,18 @@
         url: location.href,
         jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'],
       };
-      this.$http.get('//wx.funlifeday.com/web/wechat/user/get/config', {params:configDates}).then(function (res) {
+      this.$http.get('http://wx.funlifeday.com/web/wechat/user/get/config', {params:configDates}).then(function (res) {
         if (res.data) {
           wx.config(res.data);
           wx.ready(function(){
             var data   = {};
             data.title = '你有一份家庭综合维修服务待领取';
             data.desc  = '一个人也能做好维修难事';
-            data.link  = '//wx.funlifeday.com/web/wechat/user/enter/htmlClient';
-            data.img   = '//wx.funlifeday.com/storage/qrcodes/ss.jpg';
+            data.link  = 'http://wx.funlifeday.com/web/wechat/user/enter/htmlClient';
+            data.img   = 'http://wx.funlifeday.com/storage/qrcodes/ss.jpg';
             wx.onMenuShareTimeline({
                 title:   data.title, // 分享标题
+                desc:    data.desc, // 分享描述
                 link:    data.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl:  data.img, // 分享图标
                 success: function (){
@@ -222,17 +240,12 @@
       })
     },
     methods:{
-      //产品对应p_id
-        // 1 开锁
-        // 2 疏通
-        // 3 360家庭维修
-        // 4 热水器维修
-        // 5 360家电清洗
-        // 6 油烟机清洗
-        // 7 空调清洗
-        // 8 冰箱清洗
-        // 9 挂机加氟
-        // 10 柜机加氟
+      //产品对应product_id
+        // 39 开锁 // 40 疏通
+        // 2 360家庭维修 // 3 热水器维修
+        // 30 360家电清洗 // 32 油烟机清洗 // 36 空调清洗 // 35 冰箱清洗
+        // 33 挂机加氟 // 34 柜机加氟
+        // 43 保洁会员 //46 活动保洁
       showList(p_id){
         let globalToast = this.$toast.loading({
           duration: 0, // 持续展示 toast
@@ -267,6 +280,7 @@
 </script>
 
 <style scoped>
+  .s-t{font-size: .18rem;padding: 0 10px;font-weight: bold;line-height: 2;}
   .home{padding-bottom: .55rem;min-height: 100vh;}
   .list{padding-bottom:.20rem;}
   .list li{margin-bottom: 10px;}
@@ -283,8 +297,6 @@
   .top-list .btn{position: absolute;right: .15rem;bottom: .1rem;}
   .bottom-list{background: #cbe2ff;transition: all .2s ease;-webkit-transition: all .2s ease;overflow: hidden;}
   .bottom-list > div{padding: .1rem;}
-  .bottom-list.unCur{height: 0 !important;}
-  .bottom-list.cur{height: auto;}
   .bottom-list .L-info{font-size: .12rem;}
   .bottom-list .L-info-box-l{font-weight: bold;}
 

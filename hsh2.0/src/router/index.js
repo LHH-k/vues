@@ -125,6 +125,7 @@ var routes = [
       component:() => import('@/components/info360'),
       meta: {title:'家电维修价格参考表'},
     },
+    
     {
       path: '*',
       redirect: {name: 'home'},
@@ -142,7 +143,6 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title;
   }
   if(to.meta.requireAuth){    
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
     //每个页面都请求用户信息 验证token是否过期
     // console.log('router运行')
     let hasToken = localStorage.getItem('tokens');
@@ -162,45 +162,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   }
-  //分享设置
-  var configDates = {
-    url: window.location.href,
-    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'],
-  };
-  Axios.get('http://wx.funlifeday.com/web/wechat/user/get/config', {params:configDates}).then(function (res) {
-    if (res.data) {
-      wx.config(res.data);
-      wx.ready(function(){
-        var data   = {};
-        data.title = '你有一份家庭综合维修服务待领取';
-        data.desc  = '一个人也能做好维修难事';
-        data.link  = 'http://wx.funlifeday.com/web/wechat/user/enter/htmlClient';
-        data.img   = 'http://wx.funlifeday.com/storage/qrcodes/ss.jpg';
-        wx.onMenuShareTimeline({
-            title:   data.title, // 分享标题
-            desc:    data.desc, // 分享描述
-            link:    data.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl:  data.img, // 分享图标
-            success: function (){
-                // 用户点击了分享后执行的回调函数
-            },
-        });
-        wx.onMenuShareAppMessage({
-            title:   data.title, // 分享标题
-            desc:    data.desc, // 分享描述
-            link:    data.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl:  data.img, // 分享图标
-            type:    '',        // 分享类型,music、video或link，不填默认为link
-            dataUrl: '',        // 如果type是music或video，则要提供数据链接，默认为空
-            success: function (){
-                // 用户点击了分享后执行的回调函数
-            }
-        });
-      });
-    } else {
-      _this.$toast.fail("获取用户信息失败！");
-    }
-  });
   next();
 })
 

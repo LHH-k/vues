@@ -48,13 +48,6 @@
           </div>
         </van-cell-group>
         <p class="prompt">*请务必填写真实地址，以免影响您正常使用服务。</p>
-        <!-- 活动激活账号密码 -->
-        <div v-if='product_id == 46'>
-          <van-cell-group style="margin-bottom:10px" class="icon-field">
-            <van-icon name="password-view"></van-icon>
-            <van-field v-model="form.code" label="" placeholder="请填写活动激活码"></van-field>
-          </van-cell-group>
-        </div>
     </div>
     <div style="text-align:center;margin:20px 0;color:#7e7e7e;" v-if="product_id != 39 && product_id !=40">
       <van-checkbox v-model="isCheck">我已认真阅读并接受<router-link to='/fnwtext'>用户协议</router-link></van-checkbox>
@@ -91,7 +84,6 @@
           add5: "", //号
           address: "", //详细地址
           IDcard: '',//身份证
-          code:'', //活动激活码
         },
         userInfo:null,  //用户详情
         addselect : [],
@@ -259,24 +251,29 @@
               this.$http.post(`${BASE_URL}/fnw/post/NewUserAddress/${localStorage.getItem('phone')}`,adds).then((res)=>{
                 if(res.data.res){
                   let data = res.data.data;
-                  let datas = {
-                    name:	data.name,
-                    address: data.address,
-                    phone: data.mobile ,
-                    product_id : this.product_id,
-                    code:this.form.code, //活动特有激活码
-                  };
-                  // 添加订单
-                  this.$http.post(`${BASE_URL}/fnw/post/NewOrder/${localStorage.getItem('phone')}`,datas).then((res1)=>{
-                    if(res1.data.res){
-                      this.$router.replace({ name: 'pay', params:{type:product_id} , query:{order_id:res1.data.data}});
-                      this.globalToast.clear();
-                    }else{
-                      this.$toast.fail(res1.data.ex);
-                    }
-                  })
-                }else{
-                  this.$toast.fail(res.data.ex);
+                  //家庭维修直接生成新订单 (家电清洗)
+                  // if(this.product_id != 39 && this.product_id != 40){
+                    let datas = {
+                      name:	data.name,
+                      address: data.address,
+                      phone: data.mobile ,
+                      product_id : this.product_id,
+                      // id_card: '',
+                      // cat_id : '',
+                    };
+                    // 添加订单
+                    this.$http.post(`${BASE_URL}/fnw/post/NewOrder/${localStorage.getItem('phone')}`,datas).then((res1)=>{
+                      if(res.data.res){
+                        this.$router.replace({ name: 'pay', params: { type:product_id} , query:{order_id:res1.data.data}});
+                        this.globalToast.clear();
+                      }else{
+                        this.$toast.fail(res.data.ex);
+                      }
+                    })
+                  // }else{
+                  //   //疏通开锁不生成订单，呼叫时再生成
+                  //   this.$router.replace({name:'callService',params:{type:product_id},query:{add_id:res.data.data.id}});
+                  // }
                 }
               })
             } else {
@@ -301,7 +298,7 @@
             }else{
               this.$toast.fail(res.data.ex);
             }
-          })
+          }).catch((res)=>{})
         }
 
       },

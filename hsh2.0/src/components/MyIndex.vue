@@ -2,13 +2,10 @@
   <div class="myIndex">
 			<div class="top">
 				<div class="avatar-box">
-          <img :src="user_info.avatar" alt="">
-					<!-- <img v-else src="../assets/images/avatar.png" alt=""> -->
+          <!-- <img :src="user_info.avatar" alt=""> -->
+					<img src="../assets/images/avatar.png" alt="">
 				</div>
-				<div class="txt">
-          {{user_info.nickname}}
-          <!-- <span v-if="member" style="font-size: .14rem;color: rgb(211,168,9);">({{member}})</span> -->
-        </div>
+				<div class="txt">{{phone}}</div>
 			</div>
 			<div class="center">
 				<van-cell-group>
@@ -64,11 +61,11 @@ export default {
   name: "myIndex",
   data() {
     return {
+      phone:localStorage.getItem('phone'),
       user_info: {}, //个人信息
       phoneShow: false, //客服电话显示
       my_services: {}, //我的服务
       hasUnpay:0, //是否有未支付订单
-      // member:false,
     };
   },
   components: {
@@ -81,24 +78,12 @@ export default {
       forbidClick: true, // 禁用背景点击
       message: '加载中...'
     });
-    //微信基本信息
-    this.$http.post(`//wx.funlifeday.com/web/wechat/user/get/userInfo`).then((res)=>{
-      if(res.data.res){
-        this.user_info = res.data.data; //这个phone是openid
-      }
-      globalToast.clear();
-    })
-    //会员信息
-    // this.$http.get(`${BASE_URL}/fnw/get/processingService/${localStorage.getItem('phone')}`).then((res)=>{
-    //   if(res.data.res){
-        // this.member = '会员用户';
-    //   }
-    // })
     //呼叫的服务
     this.$http.get(`${BASE_URL}/fnw/get/processingService/${localStorage.getItem('phone')}`).then((res)=>{
       if(res.data.res){
         this.my_services = res.data.data;
       }
+      globalToast.clear();
     })
     //是否有未支付订单
     this.$http.get(`${BASE_URL}/fnw/get/UserUnpayOrders/${localStorage.getItem('phone')}`).then((res)=>{
